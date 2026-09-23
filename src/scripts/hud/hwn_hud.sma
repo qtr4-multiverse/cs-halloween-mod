@@ -261,7 +261,7 @@ UpdateTeamPoints()
 
     ShowSyncHudMsg(
         0, g_hudMsgTeamPoints,
-        "%L^n%L: %i / %i^t^t|^t^t%L %i / %i",
+        "%L^n%L: %i / %i^t^t|^t^t%L: %i / %i",
         LANG_PLAYER, "HWN_TEAM_PUMPKIN_COLLECTED",
         LANG_PLAYER, "TERRORISTS", tPoints, teamPointsLimit,
         LANG_PLAYER, "CTS", ctPoints, teamPointsLimit
