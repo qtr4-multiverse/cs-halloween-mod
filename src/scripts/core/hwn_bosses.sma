@@ -137,12 +137,9 @@ public Native_Register(pluginID, argc)
 
     new szDictKey[48];
     UTIL_CreateDictKey(szName, "HWN_BOSS_", szDictKey, charsmax(szDictKey));
-
-    if (UTIL_IsLocalizationExists(szDictKey)) {
-        ArrayPushString(g_bossesDictKeys, szDictKey);
-    } else {
-        ArrayPushString(g_bossesDictKeys, "");
-    }
+    // Key is resolved when the line is shown. plugin_precache runs before hwn.txt is loaded,
+    // so a check here always fails and the HUD keeps the English name.
+    ArrayPushString(g_bossesDictKeys, szDictKey);
 
     CE_RegisterHook(CEFunction_Remove, szClassname, "OnBossRemove");
 

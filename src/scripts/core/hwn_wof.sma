@@ -354,12 +354,8 @@ Register(const szName[], pluginID, invokeFuncID, revokeFuncID)
 
     new szDictKey[48];
     UTIL_CreateDictKey(szName, "HWN_WOF_SPELL_", szDictKey, charsmax(szDictKey));
-
-    if (UTIL_IsLocalizationExists(szDictKey)) {
-        ArrayPushString(g_spellDictKey, szDictKey);
-    } else {
-        ArrayPushString(g_spellDictKey, "");
-    }
+    // Same as bosses: dictionary is not loaded yet during plugin_precache.
+    ArrayPushString(g_spellDictKey, szDictKey);
 
     g_spellCount++;
 

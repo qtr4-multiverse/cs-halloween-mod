@@ -11,9 +11,10 @@
 
 public plugin_precache()
 {
+    /* szName = ML key from data/lang/hwn.txt (HWN_COSM_*) */
     Hwn_Cosmetic_Register(
         PCosmetic_Register(
-            .szName = "Coffin Pack",
+            .szName = "HWN_COSM_COFFIN_PACK",
             .modelIndex = precache_model("models/hwn/cosmetics/coffinpack.mdl"),
             .groups = (PCosmetic_Group_Back),
             .fUnusualColor = UNUSUAL_COLOR
@@ -22,7 +23,7 @@ public plugin_precache()
 
     Hwn_Cosmetic_Register(
         PCosmetic_Register(
-            .szName = "Devil Horns",
+            .szName = "HWN_COSM_DEVIL_HORNS",
             .modelIndex = precache_model("models/hwn/cosmetics/devil_horns.mdl"),
             .groups = (PCosmetic_Group_Mask),
             .fUnusualColor = UNUSUAL_COLOR
@@ -31,7 +32,7 @@ public plugin_precache()
 
     Hwn_Cosmetic_Register(
         PCosmetic_Register(
-            .szName = "Devil Tail",
+            .szName = "HWN_COSM_DEVIL_TAIL",
             .modelIndex = precache_model("models/hwn/cosmetics/devil_tail.mdl"),
             .groups = (PCosmetic_Group_Fanny),
             .fUnusualColor = UNUSUAL_COLOR
@@ -40,7 +41,7 @@ public plugin_precache()
 
     Hwn_Cosmetic_Register(
         PCosmetic_Register(
-            .szName = "Devil Wings",
+            .szName = "HWN_COSM_DEVIL_WINGS",
             .modelIndex = precache_model("models/hwn/cosmetics/devil_wings.mdl"),
             .groups = (PCosmetic_Group_Back),
             .fUnusualColor = UNUSUAL_COLOR
@@ -49,7 +50,7 @@ public plugin_precache()
 
     Hwn_Cosmetic_Register(
         PCosmetic_Register(
-            .szName = "Garlik Flank Stake",
+            .szName = "HWN_COSM_GARLIC_FLANK_STAKE",
             .modelIndex = precache_model("models/hwn/cosmetics/garlic_flank_stake.mdl"),
             .groups = (PCosmetic_Group_Legs),
             .fUnusualColor = UNUSUAL_COLOR
@@ -58,7 +59,7 @@ public plugin_precache()
 
     Hwn_Cosmetic_Register(
         PCosmetic_Register(
-            .szName = "Holy Hunter",
+            .szName = "HWN_COSM_HOLY_HUNTER",
             .modelIndex = precache_model("models/hwn/cosmetics/holy_hunter.mdl"),
             .groups = (PCosmetic_Group_Hat),
             .fUnusualColor = UNUSUAL_COLOR
@@ -67,7 +68,7 @@ public plugin_precache()
 
     Hwn_Cosmetic_Register(
         PCosmetic_Register(
-            .szName = "Pumpkin",
+            .szName = "HWN_COSM_PUMPKIN",
             .modelIndex = precache_model("models/hwn/cosmetics/pumpkin_hat.mdl"),
             .groups = (PCosmetic_Group_Hat | PCosmetic_Group_Mask),
             .fUnusualColor = UNUSUAL_COLOR
@@ -76,7 +77,7 @@ public plugin_precache()
 
     Hwn_Cosmetic_Register(
         PCosmetic_Register(
-            .szName = "Silver Bullets",
+            .szName = "HWN_COSM_SILVER_BULLETS",
             .modelIndex = precache_model("models/hwn/cosmetics/silver_bullets.mdl"),
             .groups = (PCosmetic_Group_Body),
             .fUnusualColor = UNUSUAL_COLOR
@@ -85,7 +86,7 @@ public plugin_precache()
 
     Hwn_Cosmetic_Register(
         PCosmetic_Register(
-            .szName = "Skull",
+            .szName = "HWN_COSM_SKULL",
             .modelIndex = precache_model("models/hwn/cosmetics/skull.mdl"),
             .groups = (PCosmetic_Group_Mask),
             .fUnusualColor = UNUSUAL_COLOR
@@ -94,7 +95,7 @@ public plugin_precache()
 
     Hwn_Cosmetic_Register(
         PCosmetic_Register(
-            .szName = "Spookyhood",
+            .szName = "HWN_COSM_SPOOKYHOOD",
             .modelIndex = precache_model("models/hwn/cosmetics/spookyhood.mdl"),
             .groups = (PCosmetic_Group_Hat),
             .fUnusualColor = UNUSUAL_COLOR
@@ -105,4 +106,5 @@ public plugin_precache()
 public plugin_init()
 {
     register_plugin(PLUGIN, HWN_VERSION, AUTHOR);
+    register_dictionary("hwn.txt");
 }

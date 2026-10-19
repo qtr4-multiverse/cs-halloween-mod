@@ -28,6 +28,7 @@ new g_maxPlayers;
 public plugin_init()
 {
     register_plugin(PLUGIN, HWN_VERSION, AUTHOR);
+    register_dictionary("hwn.txt");
 
     g_cvarPreview = register_cvar("hwn_pcosmetic_menu_preview", "1");
     g_cvarPreviewLight = register_cvar("hwn_pcosmetic_menu_preview_light", "1");
@@ -119,16 +120,28 @@ Create(id)
         static szCosmeticName[32];
         PCosmetic_GetCosmeticName(cosmetic, szCosmeticName, charsmax(szCosmeticName));
 
-        static text[64];
-        format
+        static szLocalizedName[48];
+        formatex(szLocalizedName, charsmax(szLocalizedName), "%L", id, szCosmeticName);
+
+        static szUnusual[24];
+        szUnusual[0] = 0;
+        if (cosmeticType == PCosmetic_Type_Unusual) {
+            formatex(szUnusual, charsmax(szUnusual), "%L ", id, "HWN_COSM_UNUSUAL");
+        }
+
+        static szTimeLeft[48];
+        formatex(szTimeLeft, charsmax(szTimeLeft), "%L", id, "HWN_COSM_TIME_LEFT", itemTime);
+
+        static text[96];
+        formatex
         (
             text,
             charsmax(text),
-            "%s%s%s (%i seconds left)",
+            "%s%s%s (%s)",
             (PCosmetic_IsItemEquiped(id, i) ? "\y" : ""),
-            (cosmeticType == PCosmetic_Type_Unusual ? "Unusual " : "^0"),
-            szCosmeticName,
-            itemTime
+            szUnusual,
+            szLocalizedName,
+            szTimeLeft
         );
 
         menu_additem(menu, text, .callback = PCosmetic_CanBeEquiped(id, cosmetic, i)

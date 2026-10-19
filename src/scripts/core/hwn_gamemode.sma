@@ -72,7 +72,11 @@ public plugin_init()
     register_message(get_user_msgid("ClCorpse"), "OnMessage_ClCorpse");
 
     register_clcmd("joinclass", "OnClCmd_JoinClass");
+    /* menuselect + old JOIN_CHOOSEAPPEARANCE=4 breaks team pick on ReGameDLL
+       (JoiningState enum differs). Only hook menuselect without ReAPI. */
+#if !defined _reapi_included
     register_clcmd("menuselect", "OnClCmd_JoinClass");
+#endif
 
     g_maxPlayers = get_maxplayers();
 
@@ -260,31 +264,39 @@ public OnClCmd_JoinClass(id)
         return PLUGIN_CONTINUE;
     }
 
+    if (g_gamemode < 0) {
+        return PLUGIN_CONTINUE;
+    }
+
     new Hwn_GamemodeFlags:flags = ArrayGetCell(g_gamemodeFlags, g_gamemode);
     if (~flags & Hwn_GamemodeFlag_RespawnPlayers) {
         return PLUGIN_CONTINUE;
     }
 
-    #if defined _reapi_included
-        new menu = get_member(id, m_iMenu);
-        new joinState = get_member(id, m_iJoiningState);
-    #else
-        new menu = get_pdata_int(id, m_iMenu);
-        new joinState = get_pdata_int(id, m_iJoiningState);
-    #endif
+    /* Still choosing team / spectator — never swallow jointeam/menuselect here */
+    new team = UTIL_GetPlayerTeam(id);
+    if (team != 1 && team != 2) {
+        return PLUGIN_CONTINUE;
+    }
+
+#if defined _reapi_included
+    new menu = get_member(id, m_iMenu);
+#else
+    new menu = get_pdata_int(id, m_iMenu);
+    new joinState = get_pdata_int(id, m_iJoiningState);
+#endif
 
     if (menu != MENU_CHOOSEAPPEARANCE) {
         return PLUGIN_CONTINUE;
     }
 
-    new team = UTIL_GetPlayerTeam(id);
-    new bool:inPlayableTeam = team == 1 || team == 2;
-
-    if (joinState != JOIN_CHOOSEAPPEARANCE && (joinState || !inPlayableTeam)) {
+#if !defined _reapi_included
+    if (joinState != JOIN_CHOOSEAPPEARANCE && joinState) {
         return PLUGIN_CONTINUE;
     }
+#endif
 
-    //ConnorMcLeod
+    //ConnorMcLeod — mid-round class pick for Collector respawn mode
     new command[11], arg1[32];
     read_argv(0, command, charsmax(command));
     read_argv(1, arg1, charsmax(arg1));

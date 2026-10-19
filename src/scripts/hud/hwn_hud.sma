@@ -33,7 +33,7 @@
 #define HUD_POS_NOTIFICATION_GIFT_PICKED 0.05, 0.35
 #define HUD_POS_NOTIFICATION_SPELL_PICKED HUD_POS_NOTIFICATION_INFO
 #define HUD_POS_NOTIFICATION_MOD_MENU HUD_POS_NOTIFICATION_INFO
-#define HUD_POS_NOTIFICATION_FIRST_PUMPKIN_PICKED HUD_POS_NOTIFICATION_INFO
+#define HUD_POS_NOTIFICATION_FIRST_PUMPKIN_PICKED -1.0, 0.73
 
 new g_hGamemodeCollector;
 
@@ -52,7 +52,6 @@ public plugin_init()
     register_plugin(PLUGIN, HWN_VERSION, AUTHOR);
 
     register_dictionary("hwn.txt");
-    register_dictionary("miscstats.txt");
 
     g_hudMsgTeamPoints = CreateHudSyncObj();
     g_hudMsgPlayerPoints = CreateHudSyncObj();
@@ -108,7 +107,7 @@ public Hwn_Bosses_Fw_BossSpawn()
     static szName[128];
     Hwn_Bosses_GetDictionaryKey(bossIdx, szName, charsmax(szName));
 
-    if (szName[0] == '^0') {
+    if (szName[0] == '^0' || !UTIL_IsLocalizationExists(szName)) {
         Hwn_Bosses_GetName(bossIdx, szName, charsmax(szName));
         show_dhudmessage(0, "%s %L!", szName, LANG_PLAYER, "HWN_BOSS_SPAWN");
     } else {
@@ -125,7 +124,7 @@ public Hwn_Bosses_Fw_BossEscape()
     static szName[128];
     Hwn_Bosses_GetDictionaryKey(bossIdx, szName, charsmax(szName));
 
-    if (szName[0] == '^0') {
+    if (szName[0] == '^0' || !UTIL_IsLocalizationExists(szName)) {
         Hwn_Bosses_GetName(bossIdx, szName, charsmax(szName));
         show_dhudmessage(0, "%s %L!", szName, LANG_PLAYER, "HWN_BOSS_ESCAPE");
     } else {
@@ -146,7 +145,7 @@ public Hwn_Wof_Fw_Effect_Start(spellIdx)
     static szSpellName[160];
     Hwn_Wof_Spell_GetDictionaryKey(spellIdx, szSpellName, charsmax(szSpellName));
 
-    if (szSpellName[0] == '^0') {
+    if (szSpellName[0] == '^0' || !UTIL_IsLocalizationExists(szSpellName)) {
         Hwn_Wof_Spell_GetName(spellIdx, szSpellName, charsmax(szSpellName));
         show_dhudmessage(0, "%L %s!", LANG_PLAYER, "HWN_WOF_EFFECT_STARTED", szSpellName);
     } else {
@@ -263,8 +262,8 @@ UpdateTeamPoints()
         0, g_hudMsgTeamPoints,
         "%L^n%L: %i / %i^t^t|^t^t%L: %i / %i",
         LANG_PLAYER, "HWN_TEAM_PUMPKIN_COLLECTED",
-        LANG_PLAYER, "TERRORISTS", tPoints, teamPointsLimit,
-        LANG_PLAYER, "CTS", ctPoints, teamPointsLimit
+        LANG_PLAYER, "HWN_TEAM_T", tPoints, teamPointsLimit,
+        LANG_PLAYER, "HWN_TEAM_CT", ctPoints, teamPointsLimit
     );
 }
 
@@ -310,7 +309,7 @@ UpdatePlayerSpell(id)
     static szSpellName[128];
     Hwn_Spell_GetDictionaryKey(playerSpell, szSpellName, charsmax(szSpellName));
 
-    if (szSpellName[0] == '^0') {
+    if (szSpellName[0] == '^0' || !UTIL_IsLocalizationExists(szSpellName)) {
         Hwn_Spell_GetName(playerSpell, szSpellName, charsmax(szSpellName));
         ShowSyncHudMsg(id, g_hudMsgPlayerSpell, "%L: %s x%i", id, "HWN_SPELL", szSpellName, amount);
     } else {

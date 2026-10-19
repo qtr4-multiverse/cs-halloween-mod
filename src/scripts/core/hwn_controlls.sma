@@ -75,7 +75,7 @@ public OnImpulse_100(id)
 public ChooseTeam(id)
 {
     g_chooseTeamOverride &= ~(1<<(id&31));
-    client_cmd(id, "chooseteam");
+    engclient_cmd(id, "chooseteam");
 }
 
 public MenuItemCosmeticCallback(id)
